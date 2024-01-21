@@ -1,24 +1,43 @@
 const { createWriteStream } = require('fs');
 const path = require('path');
+const readline = require('readline/promises');
 const os = require('os');
 
 const write = () => {
 
   const fileName = path.join(__dirname, 'text.txt');
-  const writable = createWriteStream(fileName, { flags: 'w' } );
-  const readable = process.stdin;
+  const writable = createWriteStream(fileName, { flags: 'a+' } );
 
-  process.stdout.write('Input text please:' + os.EOL);
-  process.stdin.resume();
+  const stdin = process.stdin;
+  const stdout = process.stdout;
 
-  process.on('SIGINT', () => {
-      console.log(
-          'GoodBye, come again!'
+  const rl = readline.createInterface({
+    input: stdin,
+    output: stdout,
+    prompt: 'Input text> ',
+  })
+  
+  rl.prompt();
+
+  rl.on('line', async (line)  => {
+    if (line === 'exit') { 
+      rl.close();
+    }
+    writable.write(line + os.EOL);
+  })
+  
+  rl.on('close', () => {
+    console.log(
+      'GoodBye, come again!'
       );
-      process.exit(0);
+    process.exit(0);
   });
 
-  readable.pipe(writable, { end: true });
+  process.on('SIGINT', () => {
+      rl.close();
+  });
+
+  
 };
 
 write();
