@@ -1,6 +1,9 @@
 const path = require('path');
+
 const { constants, createReadStream } = require('fs');
+
 const { access } = require('fs/promises');
+
 const checkFileExists = async (path) => {
   try {
     await access(path, constants.R_OK | constants.W_OK);
@@ -9,6 +12,7 @@ const checkFileExists = async (path) => {
     return false;
   }
 };
+
 const read = async () => {
   const fileName = path.join(__dirname, 'text.txt');
 
