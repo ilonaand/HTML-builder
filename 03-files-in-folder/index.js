@@ -18,6 +18,7 @@ const getFiles = async () => {
      }
      return accum;
    }, Promise.resolve([])) 
+   
   return files;
 }
 

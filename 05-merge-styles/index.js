@@ -4,7 +4,6 @@ const {
   readFile, 
   writeFile, 
   access,
-  appendFile,
   unlink } = require('fs/promises');
 
 const { constants } = require('fs');
