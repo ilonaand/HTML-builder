@@ -44,7 +44,7 @@ const getFiles = async () => {
 
 ( async () => {
   const distFolder = path.resolve(__dirname, './project-dist');
-  const bundle = path.resolve(distFolder, 'bundle.css')
+  const bundle = path.resolve(distFolder, './bundle.css')
   try {
     const filesContent = await getFiles();
     const isExist = await checkFileExists(bundle);
